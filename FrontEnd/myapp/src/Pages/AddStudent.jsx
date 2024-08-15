@@ -22,13 +22,14 @@ const defaultTheme = createTheme();
 export default function AddStudent(){
     const navigate = useNavigate()
     const [gradesFinal, setGrades] = useState([])
-    const [student, setStudent] = useState({id: '', name: '', faculty:'' , grades:[]})
+    const [student, setStudent] = useState({})
 
-    const addGrades =(gs)=>{
-        console.log("addGrde")
-        setGrades(gs)
-        //setStudent({...student,grades: gs})
-        //console.log("Student:", student)
+
+    //const [student, setStudent] = useState({id: '', name: '', faculty:'' , grades:[]})
+
+    function addGrades(gs){
+        setStudent({...student, grades: gs})
+        console.log("Student:", student)
     }
 
 
@@ -42,25 +43,15 @@ export default function AddStudent(){
             name: data.get('fullName'),
             faculty: data.get('faculty'),
             grades: gradesFinal}
-        
-        /*setStudent({...student, 
-            id: data.get('id'),
-            name: data.get('fullName'),
-            faculty: data.get('faculty'),
-            grades: grades})*/
 
             console.log("Student:", student)
 
             const status = await createStudent(student)
             alert(status)
             navigate("/")
-
+            getStudent(student)
             console.log("Student:", student)
       };
-
-
-
-
 
     return(
         <ThemeProvider theme={defaultTheme}>
@@ -112,7 +103,7 @@ export default function AddStudent(){
                             autoComplete="faculty"
                             />
                          </Grid>
-                         <AddGrade callback={addGrades}/>  
+                         <AddGrade student= {student} addGrades={addGrades}/>  
                          <Grid style={{textAlign:"Center"}}>              
                          <Button style={{marginTop:'20px', width: "80%"}}
                             type="submit"

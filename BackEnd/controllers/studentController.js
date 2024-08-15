@@ -24,7 +24,7 @@ router.post("/", async(req, res)=>{
 
 router.put("/:id", async(req, res)=>{
     const id = req.params.id 
-    const newData = req.body
+    const newStudent = req.body
     const status = await studentService.updateStudent(id,newStudent)
     return res.json({status})
 })

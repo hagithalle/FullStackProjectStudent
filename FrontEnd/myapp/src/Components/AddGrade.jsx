@@ -5,27 +5,33 @@ import { Avatar, Grid, ListItem, ListItemText, Paper, Typography } from '@mui/ma
 import { useState , useEffect} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-export default function AddGrade({callback}){
-    //const Student = props.student
-    const [grades, setGrades] = useState([])
-    const [grade, setGrade] = useState({profession:'', sorce: '', id:uuidv4()})
+export default function AddGrade({student,addGrades}){
+ 
+  const [grade,setGrade] = useState({profession:'', sorce: '', id:uuidv4()})
+  const [grades, setGrades] = useState([])
     
+    /*if(props.student.grades > 0)
+    {
+      console.log("x")
+      setGrades(props.student.grades)
+    }
+    */
     const addGrade =()=>{
         setGrade({...grade, id: uuidv4()})
         console.log("current gread:", grade)
         grades.push(grade)
         console.log("curent grades:", grades)
-        callback(grades)
+        addGrades(grades)
       }
 
       useEffect(()=>{
         
-        },[grades]);
+        },[]);
 
         const deleteGrade=(id)=>{
-          const tempGrades = grades.filter(grade=> grade.id != id)
+          const tempGrades = student.grades.filter(grade=> grade.id != id)
           setGrades(tempGrades) 
-          callback(tempGrades)
+          addGrades(tempGrades)
 
         }
       
@@ -73,7 +79,7 @@ export default function AddGrade({callback}){
                             </Button>
                             </Grid>
                             {
-                    grades && grades.map((grade)=>{
+                    student.grades && student.grades.map((grade)=>{
                       return(
                         <ListItem key={grade._id? grade._id : grade.id}>
                           <Paper sx={{width:'600px', display: "flex"}}>

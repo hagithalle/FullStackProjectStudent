@@ -17,6 +17,7 @@ const createStudent = async (newStudent) => {
 }
 
 const updateStudent = async (id, newData) => {
+    console.log("updateStudent:", `${id}`,`${newData}`)
     const { data } = await axios.put(`${url}/${id}`, newData)
     return data.status
 

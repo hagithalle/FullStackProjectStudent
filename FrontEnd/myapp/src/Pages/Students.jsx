@@ -11,6 +11,8 @@ import { useState, useEffect } from 'react';
 import { getAllStudents , deleteStudent} from '../Services/StudentsService';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
+import UpgradeIcon from '@mui/icons-material/Upgrade';
+import { useNavigate } from 'react-router-dom'
 
 
 
@@ -38,7 +40,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 
 export default function Students(){
-
+    const navigate = useNavigate()
    const [students, setStudents] = useState([])
 
    const fetchUsers = async () => {
@@ -48,8 +50,9 @@ export default function Students(){
 }
 
 useEffect(() => {
-    fetchUsers()
+    fetchUsers() 
 }, [])
+
 
 const removeStudent = async (id) => {
     const status = await deleteStudent(id)
@@ -57,18 +60,25 @@ const removeStudent = async (id) => {
     fetchUsers()
 }
 
+const updateStudent = (updateId)=>{
+  sessionStorage.id = updateId
+ navigate(`/update`)
+
+}
+
 
 
     return(
         <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 500 }} aria-label="customized table">
+      <Table sx={{ minWidth: 400 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell   align="center">id</StyledTableCell>
-            <StyledTableCell  align="center">name</StyledTableCell>
+            <StyledTableCell align="center">id</StyledTableCell>
+            <StyledTableCell align="center">name</StyledTableCell>
             <StyledTableCell align="center">Facult</StyledTableCell>
             <StyledTableCell align="center">Grades</StyledTableCell>
-            <StyledTableCell  align="center">Deleted</StyledTableCell>
+            <StyledTableCell align="center">Deleted</StyledTableCell>
+            <StyledTableCell  style={{width: "10px"}} align="center">Update</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -105,6 +115,11 @@ const removeStudent = async (id) => {
                 <StyledTableCell align="center">
                 <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => removeStudent(student._id)}>
                          Delete
+                         </Button> 
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                <Button variant="outlined" startIcon={<UpgradeIcon />} onClick={() => updateStudent(student._id)}>
+                         Update
                          </Button> 
                         </StyledTableCell>
             </StyledTableRow>
